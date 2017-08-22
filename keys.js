@@ -11,3 +11,7 @@ exports.spotifyKeys = {
   client_id: "d258eb72e57d4b27a88934b4e6abefce",
   client_secret: "1fb762077a084ce99c9169c6f253dc86"
 }
+
+exports.apiKey = {
+  apiKey: "40e9cece",
+}
