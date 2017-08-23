@@ -21,7 +21,6 @@ if (args[2]==="movie-this"){
   //IF USER MADE A MOVIE CHOICE
   if(args[3] !== undefined) {
     var movieName = args[3];
-    console.log(movieName);
     var queryURL = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=40e9cece";
     
     
@@ -42,7 +41,12 @@ if (args[2]==="movie-this"){
       console.log(language);
       console.log(plot);
       console.log(actors);
-    
+      console.log("This data has been logged to log.txt!");
+      var combineText = '\r\n' + title + '\r\n' + year + '\r\n' + IMDBrating + '\r\n' + rottenTomatoes + '\r\n' + country + '\r\n' + language + '\r\n' + plot + '\r\n' + actors + '\r\n';
+      fs.appendFile('log.txt', combineText, function (err) {
+        if (err) throw err;
+      });
+
     });
   }else {
   
@@ -68,6 +72,11 @@ request(queryURL, function (error, response, body)  {
   console.log(language);
   console.log(plot);
   console.log(actors);
+  console.log("This data has been logged to log.txt!");
+  var combineText = '\r\n' + title + '\r\n' + year + '\r\n' + IMDBrating + '\r\n' + rottenTomatoes + '\r\n' + country + '\r\n' + language + '\r\n' + plot + '\r\n' + actors + '\r\n';
+  fs.appendFile('log.txt', combineText, function (err) {
+    if (err) throw err;
+  });
 
 });
   }
@@ -124,6 +133,15 @@ if(args[3] !== undefined) {
    console.log("Artists(s): " + artistsArray);
    console.log("Link: " + data.tracks.items[songIndex].external_urls.spotify);
    console.log("Album: " + data.tracks.items[songIndex].album.name);
+   console.log("This data has been logged to log.txt!");
+   var songName = findSong + data.tracks.items[songIndex].name;
+   var artists = "Artists(s): " + artistsArray;
+   var link = "Link: " + data.tracks.items[songIndex].external_urls.spotify;
+   var album = "Album: " + data.tracks.items[songIndex].album.name;
+   var combineText = '\r\n' + songName + '\r\n' + artists + '\r\n' + link + '\r\n' + album + '\r\n';
+   fs.appendFile('log.txt', combineText, function (err) {
+    if (err) throw err;
+  });
    });
 
 }else {   // DEFAULT CHOICE 
@@ -167,6 +185,15 @@ if(args[3] !== undefined) {
    console.log("Artists(s): " + artistsArray);
    console.log("Link: " + data.tracks.items[songIndex].external_urls.spotify);
    console.log("Album: " + data.tracks.items[songIndex].album.name);
+   console.log("This data has been logged to log.txt!");
+   var songName = findSong + data.tracks.items[songIndex].name;
+   var artists = "Artists(s): " + artistsArray;
+   var link = "Link: " + data.tracks.items[songIndex].external_urls.spotify;
+   var album = "Album: " + data.tracks.items[songIndex].album.name;
+   var combineText = '\r\n' + songName + '\r\n' + artists + '\r\n' + link + '\r\n' + album + '\r\n';
+   fs.appendFile('log.txt', combineText, function (err) {
+    if (err) throw err;
+  });
    });
 
 }
@@ -192,8 +219,13 @@ client.get('statuses/user_timeline', params, function(error, tweets, response) {
   if (!error) {
     
    for(i=0; i<20; i++){
-    console.log("tweet: " + tweets[i].text + "---------- Created at: " + tweets[i].created_at);
-   } 
+    var tweet = "tweet: " + tweets[i].text + "---------- Created at: " + tweets[i].created_at;
+    console.log(tweet);
+    fs.appendFile('log.txt', '\r\n' + tweet + '\r\n', function (err) {
+      if (err) throw err;
+    });
+   }
+   console.log("This data has been added to the log.txt file!"); 
   }
 });
 
