@@ -5,16 +5,35 @@ var Twitter = require('twitter');
 var Spotify = require('node-spotify-api');
 
 var exportKeys = require("./keys.js");
+var inquirer = require("inquirer");
 
 var fs = require("fs");
 
 var args = process.argv;
 
-// request('http://www.google.com', function (error, response, body) {
-//   console.log('error:', error); // Print the error if one occurred 
-//   console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
-//   console.log('body:', body); // Print the HTML for the Google homepage. 
-// });
+inquirer.prompt([
+{
+  type: "list",
+  message: "What do you want to do? Console log or select one of the following choices!",
+  choices: ["movie-this", "spotify-this-song", "my-tweets"],
+  name: "choice"
+},  ])
+.then(function(inquirerResponse) {
+  // If the inquirerResponse confirms, we displays the inquirerResponse's username and pokemon from the answers.
+  var exec = require('child_process').exec, child;
+  
+  child = exec('node liri ' + inquirerResponse.choice,
+      function (error, stdout, stderr) {
+          console.log('stdout: ' + stdout);
+          console.log('stderr: ' + stderr);
+          if (error !== null) {
+               console.log('exec error: ' + error);
+          }
+      });
+
+  // args[2] = inquirerResponse.choice;
+  // console.log(inquirerResponse.choice);
+});
 
 if (args[2]==="movie-this"){
 
