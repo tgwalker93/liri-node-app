@@ -10,30 +10,64 @@ var inquirer = require("inquirer");
 var fs = require("fs");
 
 var args = process.argv;
-
+if(args[2]===undefined){
 inquirer.prompt([
 {
   type: "list",
   message: "What do you want to do? Console log or select one of the following choices!",
-  choices: ["movie-this", "spotify-this-song", "my-tweets"],
+  choices: ["movie-this", "spotify-this-song", "my-tweets", "do-what-it-says"],
   name: "choice"
 },  ])
 .then(function(inquirerResponse) {
-  // If the inquirerResponse confirms, we displays the inquirerResponse's username and pokemon from the answers.
-  var exec = require('child_process').exec, child;
-  
-  child = exec('node liri ' + inquirerResponse.choice,
-      function (error, stdout, stderr) {
-          console.log('stdout: ' + stdout);
-          console.log('stderr: ' + stderr);
-          if (error !== null) {
-               console.log('exec error: ' + error);
-          }
-      });
 
-  // args[2] = inquirerResponse.choice;
-  // console.log(inquirerResponse.choice);
+  args[2] = inquirerResponse.choice;
+
+  switch(args[2]) {
+    case "movie-this":
+    inquirer.prompt([
+      {
+          type: "input",
+          message: "What movie do you want to look up?",
+          name: "movieChoice"
+     
+      }  ])
+      .then(function(inquirerResponse) {
+      
+        args[3] = inquirerResponse.movieChoice;
+        action();
+         
+      });
+    break;
+    case "spotify-this-song":
+    inquirer.prompt([
+      {
+        type: "input",
+        message: "What song do you want to look up?",
+        name: "songChoice"
+      }  ])
+      .then(function(inquirerResponse) {
+      
+        args[3] = inquirerResponse.songChoice;
+        action();
+         
+      });
+    break;
+    case "my-tweets":
+    action();
+    break;
+    case "do-what-it-says":
+    action();
+    break;
+  }
+  
 });
+
+
+} else {
+  action();
+}
+
+function action() {
 
 if (args[2]==="movie-this"){
 
@@ -274,5 +308,7 @@ if (args[2]==="do-what-it-says"){
 
     
 
+
+}
 
 }
